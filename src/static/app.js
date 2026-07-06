@@ -976,6 +976,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getAnnouncementStatus(announcement) {
+    // Use UTC date string (YYYY-MM-DD) for consistent comparison with stored dates
     const today = new Date().toISOString().split("T")[0];
     if (announcement.expiration_date < today) return "expired";
     if (announcement.start_date && announcement.start_date > today) return "upcoming";
@@ -984,8 +985,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function formatDisplayDate(dateStr) {
     if (!dateStr) return "—";
-    const d = new Date(dateStr + "T00:00:00");
-    return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    // Append Z to parse as UTC, keeping the display date consistent with status calculations
+    const d = new Date(dateStr + "T00:00:00Z");
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
   }
 
   function renderAnnouncementRow(announcement) {
