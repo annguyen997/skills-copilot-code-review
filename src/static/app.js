@@ -1009,13 +1009,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const editBtn = document.createElement("button");
     editBtn.className = "btn-icon btn-edit";
     editBtn.setAttribute("aria-label", "Edit announcement");
-    editBtn.innerHTML = "✏️ Edit";
+    const editIcon = document.createElement("span");
+    editIcon.setAttribute("aria-hidden", "true");
+    editIcon.textContent = "✏️";
+    editBtn.appendChild(editIcon);
+    editBtn.appendChild(document.createTextNode(" Edit"));
     editBtn.addEventListener("click", () => startEditAnnouncement(announcement));
 
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "btn-icon btn-delete";
     deleteBtn.setAttribute("aria-label", "Delete announcement");
-    deleteBtn.innerHTML = "🗑️ Delete";
+    const deleteIcon = document.createElement("span");
+    deleteIcon.setAttribute("aria-hidden", "true");
+    deleteIcon.textContent = "🗑️";
+    deleteBtn.appendChild(deleteIcon);
+    deleteBtn.appendChild(document.createTextNode(" Delete"));
     deleteBtn.addEventListener("click", () =>
       showConfirmationDialog(
         `Delete this announcement? This action cannot be undone.`,
@@ -1036,10 +1044,16 @@ document.addEventListener("DOMContentLoaded", () => {
     datesDiv.className = "announcement-item-dates";
 
     const startSpan = document.createElement("span");
-    startSpan.innerHTML = `<strong>Starts:</strong> ${formatDisplayDate(announcement.start_date)}`;
+    const startLabel = document.createElement("strong");
+    startLabel.textContent = "Starts: ";
+    startSpan.appendChild(startLabel);
+    startSpan.appendChild(document.createTextNode(formatDisplayDate(announcement.start_date)));
 
     const expiresSpan = document.createElement("span");
-    expiresSpan.innerHTML = `<strong>Expires:</strong> ${formatDisplayDate(announcement.expiration_date)}`;
+    const expiresLabel = document.createElement("strong");
+    expiresLabel.textContent = "Expires: ";
+    expiresSpan.appendChild(expiresLabel);
+    expiresSpan.appendChild(document.createTextNode(formatDisplayDate(announcement.expiration_date)));
 
     datesDiv.appendChild(startSpan);
     datesDiv.appendChild(expiresSpan);

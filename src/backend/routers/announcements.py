@@ -95,7 +95,7 @@ def create_announcement(
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid expiration_date format. Use YYYY-MM-DD.")
 
-    # Normalise empty string to None
+    # Normalize empty string to None
     start_date = start_date or None
     if start_date:
         try:
