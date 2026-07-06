@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Dict, Any, Optional, List
 from datetime import date, datetime, timezone
 from bson import ObjectId
+from bson.errors import InvalidId
 
 from ..database import announcements_collection, teachers_collection
 
@@ -143,7 +144,7 @@ def update_announcement(
 
     try:
         obj_id = ObjectId(announcement_id)
-    except Exception:
+    except InvalidId:
         raise HTTPException(status_code=400, detail="Invalid announcement ID")
 
     try:
@@ -189,7 +190,7 @@ def delete_announcement(
 
     try:
         obj_id = ObjectId(announcement_id)
-    except Exception:
+    except InvalidId:
         raise HTTPException(status_code=400, detail="Invalid announcement ID")
 
     result = announcements_collection.delete_one({"_id": obj_id})
