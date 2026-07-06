@@ -12,21 +12,22 @@
     />
   </head>
   <body>
-    <div class="announcement-banner" role="status" aria-live="polite">
-      <span aria-hidden="true">📢</span>
-      <span>Activity registration is open until the end of the month. Don't lose your spot!</span>
-    </div>
+    <div id="announcements-container" role="status" aria-live="polite"></div>
     <header>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
       <div id="user-controls">
         <div id="user-status">
           <button id="login-button" class="icon-button">
-            <span class="user-icon">👤</span>
+            <span class="user-icon" aria-hidden="true">👤</span>
             <span>Login</span>
           </button>
           <div id="user-info" class="hidden">
             <span id="display-name"></span>
+            <button id="manage-announcements-button" class="icon-button" aria-label="Manage Announcements">
+              <span aria-hidden="true">📢</span>
+              <span>Announcements</span>
+            </button>
             <button id="logout-button">Logout</button>
           </div>
         </div>
@@ -135,6 +136,47 @@
           <button type="submit">Login</button>
         </form>
         <div id="login-message" class="hidden message"></div>
+      </div>
+    </div>
+
+    <!-- Announcements Management Modal -->
+    <div id="announcements-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="announcements-modal-title">
+      <div class="modal-content announcements-modal-content">
+        <button class="close-announcements-modal" aria-label="Close announcements dialog">&times;</button>
+        <h3 id="announcements-modal-title">📢 Manage Announcements</h3>
+
+        <!-- Add / Edit Form -->
+        <div class="announcement-form-card">
+          <h4 id="announcement-form-title">New Announcement</h4>
+          <div class="form-group">
+            <label for="announcement-message">Message <span class="field-required">*</span></label>
+            <textarea id="announcement-message" rows="3" placeholder="Enter announcement message..." required></textarea>
+          </div>
+          <div class="announcement-form-dates">
+            <div class="form-group">
+              <label for="announcement-start-date">Start Date <span class="field-optional">(optional)</span></label>
+              <input type="date" id="announcement-start-date" />
+            </div>
+            <div class="form-group">
+              <label for="announcement-expiration-date">Expiration Date <span class="field-required">*</span></label>
+              <input type="date" id="announcement-expiration-date" required />
+            </div>
+          </div>
+          <input type="hidden" id="announcement-edit-id" value="" />
+          <div class="announcement-form-actions">
+            <button id="announcement-cancel-edit" class="btn-secondary hidden">Cancel</button>
+            <button id="announcement-save" class="btn-primary">Save Announcement</button>
+          </div>
+          <div id="announcement-form-message" class="hidden message"></div>
+        </div>
+
+        <!-- All Announcements List -->
+        <div class="announcements-list-section">
+          <h4>All Announcements</h4>
+          <div id="announcements-management-list" aria-live="polite">
+            <p class="announcements-loading">Loading...</p>
+          </div>
+        </div>
       </div>
     </div>
 
